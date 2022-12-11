@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import xyz.ukrainskiys.discorddota.bot.SlashCommand;
 import xyz.ukrainskiys.discorddota.bot.handlers.PlaySlashCommandHandler;
 import xyz.ukrainskiys.discorddota.bot.handlers.SlashCommandHandler;
+import xyz.ukrainskiys.discorddota.bot.handlers.StopSlashCommandHandler;
 
 @Service
 @ConditionalOnClass({
@@ -21,23 +22,19 @@ public class SlashCommandCreateListenerImpl implements SlashCommandCreateListene
   private final Map<SlashCommand, SlashCommandHandler> commandHandlerMap = new HashMap<>();
 
   public SlashCommandCreateListenerImpl(
-      PlaySlashCommandHandler playSlashCommandHandler) {
+          PlaySlashCommandHandler playSlashCommandHandler,
+          StopSlashCommandHandler stopSlashCommandHandler) {
     this.commandHandlerMap.put(SlashCommand.PLAY, playSlashCommandHandler);
-    this.commandHandlerMap.put(SlashCommand.ADD_TRACK, (event -> System.out.println()));
-    this.commandHandlerMap.put(SlashCommand.STOP, (event -> System.out.println()));
-    this.commandHandlerMap.put(SlashCommand.PLAYLIST, (event -> System.out.println()));
+    this.commandHandlerMap.put(SlashCommand.ADD_TRACK, null /*TODO*/);
+    this.commandHandlerMap.put(SlashCommand.PLAYLIST, null /*TODO*/);
+    this.commandHandlerMap.put(SlashCommand.STOP, stopSlashCommandHandler);
   }
 
   @Override
   public void onSlashCommandCreate(SlashCommandCreateEvent event) {
     final SlashCommandInteraction slashCommandInteraction = event.getSlashCommandInteraction();
-    final SlashCommand command = SlashCommand.parse(slashCommandInteraction.getFullCommandName());
+    final SlashCommand command = SlashCommand.valueOf(slashCommandInteraction.getFullCommandName().toUpperCase());
 
     commandHandlerMap.get(command).handle(event);
-
-//    slashCommandInteraction.createImmediateResponder()
-//        .setContent(slashCommandInteraction.getFullCommandName())
-//        .setFlags(MessageFlag.EPHEMERAL)
-//        .respond();
   }
 }

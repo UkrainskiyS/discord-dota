@@ -41,14 +41,14 @@ public class DiscordDotaBot {
 
   private Set<SlashCommandBuilder> getBuildersSlashCommands() {
     final Set<SlashCommandBuilder> commands = new HashSet<>();
-    commands.add(SlashCommand.with(STOP.toString(), "stop music"));
-    commands.add(SlashCommand.with(PLAYLIST.toString(), "saved tracks"));
-    commands.add(SlashCommand.with(PLAY.toString(), "launch a track or album from youtube", List.of(
-        SlashCommandOption.createChannelOption("channel", "The channel to modify", true,
+    commands.add(SlashCommand.with(STOP.toString(), "Interrupt playback"));
+    commands.add(SlashCommand.with(PLAYLIST.toString(), "Saved tracks"));
+    commands.add(SlashCommand.with(PLAY.toString(), "Launch a track or album from youtube", List.of(
+        SlashCommandOption.createChannelOption("channel", "the channel to modify", true,
             List.of(ChannelType.SERVER_VOICE_CHANNEL)),
         SlashCommandOption.createStringOption("url", "link on youtube source", true)
     )));
-    commands.add(SlashCommand.with(ADD_TRACK.toString(), "add new track", List.of(
+    commands.add(SlashCommand.with(ADD_TRACK.toString(), "Add new track", List.of(
         SlashCommandOption.createStringOption("name", "name", true),
         SlashCommandOption.createStringOption("url", "link on youtube source", true))));
     return commands;

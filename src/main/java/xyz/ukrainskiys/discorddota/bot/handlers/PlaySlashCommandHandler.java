@@ -7,6 +7,9 @@ import com.sedmelluq.discord.lavaplayer.player.FunctionalResultHandler;
 import com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeAudioSourceManager;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
+
+import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
+import lombok.RequiredArgsConstructor;
 import org.javacord.api.audio.AudioSource;
 import org.javacord.api.entity.channel.ServerChannel;
 import org.javacord.api.entity.channel.ServerVoiceChannel;
@@ -15,9 +18,11 @@ import org.javacord.api.interaction.SlashCommandInteraction;
 import org.javacord.api.util.logging.ExceptionLogger;
 import org.springframework.stereotype.Component;
 import xyz.ukrainskiys.discorddota.lavaplayer.LavaplayerAudioSource;
+import xyz.ukrainskiys.discorddota.repository.ServersRepository;
 import xyz.ukrainskiys.discorddota.utils.DiscordUtils;
 
 @Component
+@RequiredArgsConstructor
 public class PlaySlashCommandHandler implements SlashCommandHandler {
 
   private static final AudioPlayer player;
@@ -28,6 +33,8 @@ public class PlaySlashCommandHandler implements SlashCommandHandler {
     playerManager.registerSourceManager(new YoutubeAudioSourceManager());
     player = playerManager.createPlayer();
   }
+
+  private final ServersRepository serversRepository;
 
   @Override
   public void handle(SlashCommandCreateEvent event) {
@@ -65,6 +72,7 @@ public class PlaySlashCommandHandler implements SlashCommandHandler {
           return;
         }
 
+        serversRepository.saveServer(channel.getServer().getId(), channel.getId());
         DiscordUtils.sendCommandRespond(interaction, "Track launched!");
       }).exceptionally(ExceptionLogger.get());
     }
