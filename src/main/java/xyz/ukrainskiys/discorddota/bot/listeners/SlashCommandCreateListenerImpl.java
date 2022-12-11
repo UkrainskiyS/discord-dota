@@ -34,36 +34,10 @@ public class SlashCommandCreateListenerImpl implements SlashCommandCreateListene
     final SlashCommand command = SlashCommand.parse(slashCommandInteraction.getFullCommandName());
 
     commandHandlerMap.get(command).handle(event);
-//
-//    System.out.println(event.getSlashCommandInteraction().getServer().get().getId());
-//
-//    String content = null;
-//    if (SlashCommand.ADD_TRACK.equals(command)) {
-//      content = concat(List.of(slashCommandInteraction.getFullCommandName(),
-//          slashCommandInteraction.getArgumentStringValueByIndex(0).orElse("null"),
-//          slashCommandInteraction.getArgumentStringValueByIndex(1).orElse("null")));
-//    } else if (SlashCommand.VOLUME.equals(command)) {
-//      final int volume = Math.toIntExact(slashCommandInteraction.getArgumentLongValueByIndex(0).orElse(0L));
-//      event.getInteraction().getServer().get().getVoiceChannelsByName("music").get(0)
-//          .connect().thenAccept(audioConnection -> {
-//            final LavaplayerAudioSource source = (LavaplayerAudioSource) audioConnection;
-//            source.setVolume(volume);
-//          });
-//
-//      content = concat(List.of(slashCommandInteraction.getFullCommandName(),
-//          slashCommandInteraction.getArgumentLongValueByIndex(0).orElse(0L)));
-//    } else if (SlashCommand.PLAY.equals(command)) {
-//      content = slashCommandInteraction.getFullCommandName();
-//      new PlaySlashCommandHandler().handle(event);
-//    } else if (SlashCommand.PLAYLIST.equals(command)) {
-//      content = slashCommandInteraction.getFullCommandName();
-//    } else if (SlashCommand.STOP.equals(command)) {
-//      content = slashCommandInteraction.getFullCommandName();
-//    }
-//
-    slashCommandInteraction.createImmediateResponder()
-        .setContent(slashCommandInteraction.getFullCommandName())
-        .setFlags(MessageFlag.EPHEMERAL)
-        .respond();
+
+//    slashCommandInteraction.createImmediateResponder()
+//        .setContent(slashCommandInteraction.getFullCommandName())
+//        .setFlags(MessageFlag.EPHEMERAL)
+//        .respond();
   }
 }
