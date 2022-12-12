@@ -1,20 +1,28 @@
 package xyz.ukrainskiys.discorddota.repository;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+import xyz.ukrainskiys.discorddota.model.DiscordServer;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Repository
-@RequiredArgsConstructor
-public class ServersRepository {
+public class ServersRepository extends RepositoryBase<DiscordServer> {
 
-  private final JdbcTemplate jdbcTemplate;
+  protected ServersRepository(JdbcTemplate jdbcTemplate) {
+    super(null, "DISCORD_SERVERS", jdbcTemplate);
+  }
 
+  @Transactional
   public Optional<Long> getVoiceChannelId(Long serverId) {
-    final String query = "SELECT VOICE_CHANNEL_ID FROM DISCORD_SERVERS WHERE ID = ?";
-    return Optional.ofNullable(jdbcTemplate.queryForObject(query, Long.TYPE, serverId));
+    String query = "SELECT COUNT(*) FROM DISCORD_SERVERS WHERE ID = ?";
+    final Long count = Objects.requireNonNull(jdbcTemplate.queryForObject(query, Long.class, serverId));
+    if (count > 0) {
+      return Optional.ofNullable(jdbcTemplate.queryForObject(query, Long.TYPE, serverId));
+    }
+    return Optional.empty();
   }
 
   public void saveServer(Long serverId, Long voiceChannelId) {

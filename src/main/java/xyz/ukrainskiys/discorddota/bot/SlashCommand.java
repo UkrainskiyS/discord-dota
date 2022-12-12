@@ -1,7 +1,7 @@
 package xyz.ukrainskiys.discorddota.bot;
 
 public enum SlashCommand {
-  ADD_TRACK, PLAY, PLAYLIST, STOP;
+  ADD_TRACK, PLAY, PLAY_ADDED, PLAYLIST, STOP, PLAYING_HISTORY;
 
   @Override
   public String toString() {
