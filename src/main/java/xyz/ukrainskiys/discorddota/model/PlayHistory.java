@@ -11,8 +11,17 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class PlayHistory {
 
-  public Long trackId;
-  public String trackUrl;
-  public LocalDateTime startTime;
-  public Long discordServerId;
+  private Long trackId;
+  private String trackUrl;
+  private LocalDateTime startTime;
+  private Long discordServerId;
+
+  @Getter
+  @Setter
+  @Builder
+  public static class DTO {
+    private String name;
+    private String url;
+    private LocalDateTime startTime;
+  }
 }

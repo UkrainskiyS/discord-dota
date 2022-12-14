@@ -8,10 +8,7 @@ import org.javacord.api.listener.interaction.SlashCommandCreateListener;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.stereotype.Service;
 import xyz.ukrainskiys.discorddota.bot.SlashCommand;
-import xyz.ukrainskiys.discorddota.bot.handlers.PlayAddedSlashCommandHandler;
-import xyz.ukrainskiys.discorddota.bot.handlers.PlaySlashCommandHandler;
-import xyz.ukrainskiys.discorddota.bot.handlers.SlashCommandHandler;
-import xyz.ukrainskiys.discorddota.bot.handlers.StopSlashCommandHandler;
+import xyz.ukrainskiys.discorddota.bot.handlers.*;
 
 @Service
 @ConditionalOnClass({
@@ -24,10 +21,11 @@ public class SlashCommandCreateListenerImpl implements SlashCommandCreateListene
   public SlashCommandCreateListenerImpl(
           PlaySlashCommandHandler playSlashCommandHandler,
           PlayAddedSlashCommandHandler playAddedSlashCommandHandler,
-          StopSlashCommandHandler stopSlashCommandHandler) {
+          StopSlashCommandHandler stopSlashCommandHandler,
+          PlayingHistorySlashCommandHandler playingHistorySlashCommandHandler) {
     this.commandHandlerMap.put(SlashCommand.PLAY, playSlashCommandHandler);
     this.commandHandlerMap.put(SlashCommand.PLAY_ADDED, playAddedSlashCommandHandler);
-    this.commandHandlerMap.put(SlashCommand.PLAYING_HISTORY, null /*TODO*/);
+    this.commandHandlerMap.put(SlashCommand.PLAYING_HISTORY, playingHistorySlashCommandHandler);
     this.commandHandlerMap.put(SlashCommand.ADD_TRACK, null /*TODO*/);
     this.commandHandlerMap.put(SlashCommand.PLAYLIST, null /*TODO*/);
     this.commandHandlerMap.put(SlashCommand.STOP, stopSlashCommandHandler);
